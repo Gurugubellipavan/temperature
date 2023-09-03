@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="script.js" defer></script>
+    <title>Temperature Converter</title>
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    const burger = document.querySelector('.burger');
+    const navLinks = document.querySelector('.nav-links');
+
+    burger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+
+    const convertBtn = document.getElementById("convertBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const inputTemp = document.getElementById("inputTemp");
+    const fromUnit = document.getElementById("fromUnit");
+    const toUnit = document.getElementById("toUnit");
+    const resultText = document.getElementById("resultText");
+
+    convertBtn.addEventListener("click", function () {
+        const inputValue = parseFloat(inputTemp.value);
+        const from = fromUnit.value;
+        const to = toUnit.value;
+        let result;
+
+        if (isNaN(inputValue)) {
+            resultText.textContent = "Please enter a valid number.";
+            return;
+        }
+
+        if (from === to) {
+            resultText.textContent = "Please select different units.";
+            return;
+        }
+
+        if (from === "celsius" && to === "fahrenheit") {
+            result = (inputValue * 9/5) + 32;
+        } else if (from === "celsius" && to === "kelvin") {
+            result = inputValue + 273.15;
+        } else if (from === "fahrenheit" && to === "celsius") {
+            result = (inputValue - 32) * 5/9;
+        } else if (from === "fahrenheit" && to === "kelvin") {
+            result = (inputValue - 32) * 5/9 + 273.15;
+        } else if (from === "kelvin" && to === "celsius") {
+            result = inputValue - 273.15;
+        } else if (from === "kelvin" && to === "fahrenheit") {
+            result = (inputValue - 273.15) * 9/5 + 32;
+        }
+
+        resultText.textContent = `Converted temperature: ${result.toFixed(2)} ${to}`;
+    });
+
+    clearBtn.addEventListener("click", function () {
+        inputTemp.value = "";
+        resultText.textContent = "Converted temperature will be displayed here.";
+    });
+});
+
+    </script>
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="temperature.png" alt="Temperature Converter Logo" width="80px" height="100px">
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#converter">Converter</a></li>
+                
+            </ul>
+            <div class="burger">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <section id="home" class="banner">
+            <div class="banner-content">
+                <h2>Welcome to the Temperature Converter</h2>
+                <p>Convert temperatures easily with our user-friendly tool.</p>
+            </div>
+        </section>
+        <section id="converter" class="converter">
+            <h2>Temperature Converter</h2>
+            <div class="converter-inputs">
+                <input type="number" id="inputTemp" placeholder="Enter temperature">
+                <select id="fromUnit">
+                    <option value="celsius">Celsius</option>
+                    <option value="fahrenheit">Fahrenheit</option>
+                    <option value="kelvin">Kelvin</option>
+                </select>
+                <i class="fas fa-exchange-alt"></i>
+                <select id="toUnit">
+                    <option value="celsius">Celsius</option>
+                    <option value="fahrenheit">Fahrenheit</option>
+                    <option value="kelvin">Kelvin</option>
+                </select>
+            </div>
+            <button id="convertBtn">Convert</button>
+            <button id="clearBtn">Clear</button>
+            <div class="result">
+                <p id="resultText">Converted temperature will be displayed here.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Temperature Converter</p>
+    </footer>
+</body>
+</html>
